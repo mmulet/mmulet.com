@@ -1,0 +1,543 @@
+<!DOCTYPE html><template> <span>version-1.0</span></template><html lang="en"><head><meta charset="utf-8" content="text/html"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#1e1e1e"><style>/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+========================================================================== */
+
+/**
+* 1. Correct the line height in all browsers.
+* 2. Prevent adjustments of font size after orientation changes in iOS.
+*/
+
+html {
+line-height: 1.15; /* 1 */
+-webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+========================================================================== */
+
+/**
+* Remove the margin in all browsers.
+*/
+
+body {
+margin: 0;
+}
+
+/**
+* Render the `main` element consistently in IE.
+*/
+
+main {
+display: block;
+}
+
+/**
+* Correct the font size and margin on `h1` elements within `section` and
+* `article` contexts in Chrome, Firefox, and Safari.
+*/
+
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+
+/* Grouping content
+========================================================================== */
+
+/**
+* 1. Add the correct box sizing in Firefox.
+* 2. Show the overflow in Edge and IE.
+*/
+
+hr {
+box-sizing: content-box; /* 1 */
+height: 0; /* 1 */
+overflow: visible; /* 2 */
+}
+
+/**
+* 1. Correct the inheritance and scaling of font size in all browsers.
+* 2. Correct the odd `em` font sizing in all browsers.
+*/
+
+pre {
+font-family: monospace, monospace; /* 1 */
+font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+========================================================================== */
+
+/**
+* Remove the gray background on active links in IE 10.
+*/
+
+a {
+background-color: transparent;
+}
+
+/**
+* 1. Remove the bottom border in Chrome 57-
+* 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+*/
+
+abbr[title] {
+border-bottom: none; /* 1 */
+text-decoration: underline; /* 2 */
+text-decoration: underline dotted; /* 2 */
+}
+
+/**
+* Add the correct font weight in Chrome, Edge, and Safari.
+*/
+
+b,
+strong {
+font-weight: bolder;
+}
+
+/**
+* 1. Correct the inheritance and scaling of font size in all browsers.
+* 2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp {
+font-family: monospace, monospace; /* 1 */
+font-size: 1em; /* 2 */
+}
+
+/**
+* Add the correct font size in all browsers.
+*/
+
+small {
+font-size: 80%;
+}
+
+/**
+* Prevent `sub` and `sup` elements from affecting the line height in
+* all browsers.
+*/
+
+sub,
+sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+
+sub {
+bottom: -0.25em;
+}
+
+sup {
+top: -0.5em;
+}
+
+/* Embedded content
+========================================================================== */
+
+/**
+* Remove the border on images inside links in IE 10.
+*/
+
+img {
+border-style: none;
+}
+
+/* Forms
+========================================================================== */
+
+/**
+* 1. Change the font styles in all browsers.
+* 2. Remove the margin in Firefox and Safari.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+font-family: inherit; /* 1 */
+font-size: 100%; /* 1 */
+line-height: 1.15; /* 1 */
+margin: 0; /* 2 */
+}
+
+/**
+* Show the overflow in IE.
+* 1. Show the overflow in Edge.
+*/
+
+button,
+input { /* 1 */
+overflow: visible;
+}
+
+/**
+* Remove the inheritance of text transform in Edge, Firefox, and IE.
+* 1. Remove the inheritance of text transform in Firefox.
+*/
+
+button,
+select { /* 1 */
+text-transform: none;
+}
+
+/**
+* Correct the inability to style clickable types in iOS and Safari.
+*/
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+-webkit-appearance: button;
+}
+
+/**
+* Remove the inner border and padding in Firefox.
+*/
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+border-style: none;
+padding: 0;
+}
+
+/**
+* Restore the focus styles unset by the previous rule.
+*/
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+outline: 1px dotted ButtonText;
+}
+
+/**
+* Correct the padding in Firefox.
+*/
+
+fieldset {
+padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+* 1. Correct the text wrapping in Edge and IE.
+* 2. Correct the color inheritance from `fieldset` elements in IE.
+* 3. Remove the padding so developers are not caught out when they zero out
+*    `fieldset` elements in all browsers.
+*/
+
+legend {
+box-sizing: border-box; /* 1 */
+color: inherit; /* 2 */
+display: table; /* 1 */
+max-width: 100%; /* 1 */
+padding: 0; /* 3 */
+white-space: normal; /* 1 */
+}
+
+/**
+* Add the correct vertical alignment in Chrome, Firefox, and Opera.
+*/
+
+progress {
+vertical-align: baseline;
+}
+
+/**
+* Remove the default vertical scrollbar in IE 10+.
+*/
+
+textarea {
+overflow: auto;
+}
+
+/**
+* 1. Add the correct box sizing in IE 10.
+* 2. Remove the padding in IE 10.
+*/
+
+[type="checkbox"],
+[type="radio"] {
+box-sizing: border-box; /* 1 */
+padding: 0; /* 2 */
+}
+
+/**
+* Correct the cursor style of increment and decrement buttons in Chrome.
+*/
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+height: auto;
+}
+
+/**
+* 1. Correct the odd appearance in Chrome and Safari.
+* 2. Correct the outline style in Safari.
+*/
+
+[type="search"] {
+-webkit-appearance: textfield; /* 1 */
+outline-offset: -2px; /* 2 */
+}
+
+/**
+* Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+[type="search"]::-webkit-search-decoration {
+-webkit-appearance: none;
+}
+
+/**
+* 1. Correct the inability to style clickable types in iOS and Safari.
+* 2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+-webkit-appearance: button; /* 1 */
+font: inherit; /* 2 */
+}
+
+/* Interactive
+========================================================================== */
+
+/*
+* Add the correct display in Edge, IE 10+, and Firefox.
+*/
+
+details {
+display: block;
+}
+
+/*
+* Add the correct display in all browsers.
+*/
+
+summary {
+display: list-item;
+}
+
+/* Misc
+========================================================================== */
+
+/**
+* Add the correct display in IE 10+.
+*/
+
+template {
+display: none;
+}
+
+/**
+* Add the correct display in IE 10.
+*/
+
+[hidden] {
+display: none;
+}</style><style>html {
+  background-color: #1e1e1e;
+  
+}
+body {
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  max-width: 90%;
+}
+
+@media (min-width: 600px) {
+  main {
+    max-width: 50%;
+    padding: 20px 0px;
+
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 4px solid black;
+  border-radius: 25px;
+ 
+}
+
+.content {
+  padding: 20px;
+}
+
+
+
+.red-line {
+    min-width: 100%; height:5px; background-color: red;
+}
+.left-align {
+  width: 100%;
+}
+
+.animation-toggle-box {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+td {
+  min-width: 150px;
+}
+.header-anchor {
+  text-decoration: none;
+  color: black;
+}</style><title>Michael Mulet</title><link rel="stylesheet" href="/code/index.css"><style>@font-face {
+  font-family: 'ChiKareGo2';
+  src: url('/static/ChiKareGo2.ttf');
+}
+@font-face {
+  font-family: 'karen2mono';
+  src: url('/static/karen2mono.ttf');
+}
+  @font-face {
+  font-family: 'trueitalicWIP';
+  src: url('/static/trueitalicWIP.ttf');
+}
+@font-face {
+  font-family: 'frak';
+  src: url('/static/PixelFraktur.ttf');
+}
+@font-face {
+  font-family: 'Mademoiselle';
+  src: url('/static/Mademoiselle.ttf');
+}
+#terminal {
+  color: #e4ad39; 
+  padding: 10px;
+  margin-top: 10px;
+  height: 168px;
+  width: 265px; 
+  font-family: karen2mono, monospace; 
+  position: absolute;
+  top: 256px;
+  left: 113px;
+  display: flex;
+  flex-flow: column
+}
+.terminal-text {
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: black; 
+  color: #e4ad39;
+  width: 100%;
+
+}
+.box {
+  align-items: center;
+  border: 1px solid #e4ad39;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 10px;
+  color: #e4ad39;
+  max-width: 80%;
+}
+
+@media (min-width: 600px) {
+  .box {
+    max-width: 50%;
+    padding: 20px
+
+  }
+}
+a {
+  color: #559cd5;
+}
+.fancy {
+  font-family: frak;
+  font-size: 20px;
+   color: #e4ad39;
+}
+.handwritten {
+  font-family: trueitalicWIP;
+  font-size: 30px;
+}
+.cursive{
+  font-family: Mademoiselle;
+  font-size: 30px;
+}
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#1e1e1e;color:#dcdcdc}.hljs-keyword,.hljs-literal,.hljs-name,.hljs-symbol{color:#569cd6}.hljs-link{color:#569cd6;text-decoration:underline}.hljs-built_in,.hljs-type{color:#4ec9b0}.hljs-class,.hljs-number{color:#b8d7a3}.hljs-meta .hljs-string,.hljs-string{color:#d69d85}.hljs-regexp,.hljs-template-tag{color:#9a5334}.hljs-formula,.hljs-function,.hljs-params,.hljs-subst,.hljs-title{color:#dcdcdc}.hljs-comment,.hljs-quote{color:#57a64a;font-style:italic}.hljs-doctag{color:#608b4e}.hljs-meta,.hljs-meta .hljs-keyword,.hljs-tag{color:#9b9b9b}.hljs-template-variable,.hljs-variable{color:#bd63c5}.hljs-attr,.hljs-attribute{color:#9cdcfe}.hljs-section{color:gold}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-bullet,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-selector-tag{color:#d7ba7d}.hljs-addition{background-color:#144212;display:inline-block;width:100%}.hljs-deletion{background-color:#600;display:inline-block;width:100%}
+code {
+  font-family: karen2mono;
+  font-size: 20px;
+}
+
+.header-anchor {
+  color: #e4ad39;
+  font-size: 30px;
+}
+
+
+button {
+  background-color: #e4ad39;
+  color: black;
+  border: none;
+}
+body {
+  font-family: ChiKareGo2;
+}
+
+
+</style></head><body><div class="box"><h2>Michael Mulet, the website!</h2>
+<p>This is the personal site of Michael Mulet (aka mmulet). I'm a software engineer and general tinkerer and inventor.
+You can find some of my work below:</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/mmulet">My GitHub Profile </a></li>
+</ul>
+</div><div style="color: #e4ad39"><h2>My Projects</h2>
+</div><div class="box"><a href="https://www.coderelay.io/fontemon.html"><img src="/static/fontemon-logo.png"></a><ul>
+<li><a href="https://www.coderelay.io/fontemon.html">Fontemon</a> - A pokemon parody in a font. The world's first full video game in a font!</li>
+</ul>
+<img src="/static/fontemon-screenshot.png"><h2>Press coverage</h2>
+<ul>
+<li><a href="https://www.theverge.com/tldr/2021/3/19/22340145/fontemon-pokemon-parody-game-typing-minnesota-font">The verge</a></li>
+<li><a href="https://www.gamespot.com/articles/fontemon-is-a-very-strange-pokemon-parody-in-a-font/1100-6489105/">Gamespot</a></li>
+<li><a href="https://www.pcgamer.com/this-pokemon-fan-game-is-very-literally-made-out-of-a-font/">PC Gamer</a>
+= <a href="https://www.rockpapershotgun.com/fontemon-is-a-pokemon-parody-inside-a-font-somehow">Rock Paper Shotgun</a></li>
+<li><a href="https://gizmodo.com/this-game-reimagines-pokemon-as-a-playable-font-where-c-1846520824">Gizmodo</a></li>
+<li><a href="https://news.ycombinator.com/item?id=26495059">Hacker news</a></li>
+</ul>
+</div><div class="box"><a href="https://hack-words.com"><img src="/static/hack-words-logo.png" style="width: 100%;"></a><ul>
+<li><a href="https://hack-words.com">Hack-Words</a> -  An in-browser demo of compressed sensing presented as a riddle game.</li>
+</ul>
+<h3>In game screenshot:</h3>
+<img src="/static/hack-words-screenshot.png" style="width: 100%;"></div><div class="box"><a href="https://jellyml.com"><img src="/static/jellyml-logo.png" style="width: 100%;"></a><ul>
+<li><a href="https://jellyml.com">JellyML</a> -  An open-source tool for improving reproducibility in ML research workflows by adding a snapshot of the experiment code to a Pytorch model save file.</li>
+</ul>
+<h3>Screenshot of the CLI:</h3>
+<img src="/static/jellyml-screenshot.png" style="width: 100%;"></div><div class="box"><a href="https://www.coderelay.io"><video style="max-width:100%;display:block" width="800" height="600" autoplay="" muted="" loop="" playsinline="" title="Code Relay"><source src="/static/code-relay.webm" type="video/webm"></video></a><ul>
+<li><a href="https://www.coderelay.io">Code Relay</a> - A fun new way to write code by passing off small tasks between coders like a baton is passed in a relay race.</li>
+</ul>
+<h3>Screenshot of the website:</h3>
+<img src="/static/code-relay-screenshot.png" style="width: 100%;"></div><div class="box"><a href="https://aescripts.com/screen-saver-exporter/"><img src="/static/sse-logo.jpg"></a><ul>
+<li><a href="https://aescripts.com/screen-saver-exporter/">Screen Saver Exporter</a> - Export your After Effects compositions as screen savers for Windows and Mac with one click</li>
+</ul>
+</div></body><div class="box"><p>The font <a href="https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/?id=3780">ChiKareGo2</a> by Giles Booth is licensed under Creative Commons Attribution</p>
+</div><footer style="color: #e4ad39"><p>Copyright 2023 Michael Mulet</p></footer><script src="/code/index.js"></script></html>

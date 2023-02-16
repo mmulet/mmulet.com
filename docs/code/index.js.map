@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../client/src/index.ts"],
+  "sourcesContent": ["window.onload = async () => {\n  ///No-op\n};\n"],
+  "mappings": ";;AAAA,SAAO,SAAS,YAAY;AAAA,EAE5B;",
+  "names": []
+}

@@ -29,5 +29,5 @@ cd client
 npm install .
 cd ../dev_server
 npm install .
-npm run build
+npm run dev
 ```

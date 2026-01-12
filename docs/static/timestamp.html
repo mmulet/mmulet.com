@@ -78,9 +78,30 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        input[type="datetime-local"]:focus {
+        input[type="datetime-local"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus {
             outline: none;
             border-color: #007AFF;
+        }
+        .utc-input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .utc-input-row input[type="date"] {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        .utc-input-row input[type="time"] {
+            width: 140px;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
         }
         .button-row {
             display: flex;
@@ -131,8 +152,14 @@
 
         <hr>
 
-        <label for="datetime-picker">Pick a date and time:</label>
+        <label for="datetime-picker">Pick a date and time (local):</label>
         <input type="datetime-local" id="datetime-picker">
+
+        <label for="date-picker-utc">Pick a date and time (UTC, 24h):</label>
+        <div class="utc-input-row">
+            <input type="date" id="date-picker-utc">
+            <input type="time" id="time-picker-utc" step="1">
+        </div>
         
         <div class="button-row">
             <button class="copy-btn" id="copy-btn">Copy Link to Clipboard</button>
@@ -147,6 +174,8 @@
         const timezoneInfo = document.getElementById('timezone-info');
         const utcDisplay = document.getElementById('utc-display');
         const datetimePicker = document.getElementById('datetime-picker');
+        const datePickerUTC = document.getElementById('date-picker-utc');
+        const timePickerUTC = document.getElementById('time-picker-utc');
         const copyBtn = document.getElementById('copy-btn');
         const timestampInfo = document.getElementById('timestamp-info');
 
@@ -228,6 +257,31 @@
             return `${year}-${month}-${day}T${hours}:${minutes}`;
         }
 
+        function toUTCDateString(date) {
+            const year = date.getUTCFullYear();
+            const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+            const day = date.getUTCDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function toUTCTimeString(date) {
+            const hours = date.getUTCHours().toString().padStart(2, '0');
+            const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+            const seconds = date.getUTCSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        function parseUTCInputs() {
+            const datePart = datePickerUTC.value;
+            const timePart = timePickerUTC.value || '00:00:00';
+            const [year, month, day] = datePart.split('-').map(Number);
+            const timeParts = timePart.split(':').map(Number);
+            const hours = timeParts[0] || 0;
+            const minutes = timeParts[1] || 0;
+            const seconds = timeParts[2] || 0;
+            return new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+        }
+
         function updateURL(timestamp) {
             const url = new URL(window.location.href);
             url.searchParams.set('t', timestamp);
@@ -245,6 +299,8 @@
             const timestamp = getTimestampFromURL();
             const date = timestamp ? new Date(timestamp * 1000) : new Date();
             datetimePicker.value = toLocalDatetimeString(date);
+            datePickerUTC.value = toUTCDateString(date);
+            timePickerUTC.value = toUTCTimeString(date);
             
             if (timestamp) {
                 updateTimestampInfo(timestamp);
@@ -254,12 +310,30 @@
             }
         }
 
+        function updateUTCPickers(date) {
+            datePickerUTC.value = toUTCDateString(date);
+            timePickerUTC.value = toUTCTimeString(date);
+        }
+
         datetimePicker.addEventListener('change', () => {
             const date = new Date(datetimePicker.value);
             const timestamp = Math.floor(date.getTime() / 1000);
+            updateUTCPickers(date);
             updateURL(timestamp);
             displayTimestamp(timestamp);
         });
+
+        function handleUTCChange() {
+            if (!datePickerUTC.value) return;
+            const date = parseUTCInputs();
+            const timestamp = Math.floor(date.getTime() / 1000);
+            datetimePicker.value = toLocalDatetimeString(date);
+            updateURL(timestamp);
+            displayTimestamp(timestamp);
+        }
+
+        datePickerUTC.addEventListener('change', handleUTCChange);
+        timePickerUTC.addEventListener('change', handleUTCChange);
 
         copyBtn.addEventListener('click', async () => {
             const date = new Date(datetimePicker.value);

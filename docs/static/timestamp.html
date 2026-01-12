@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unix Timestamp Converter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        .time-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #111;
+            margin: 30px 0;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+        .date-display {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .timezone-info {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .utc-display {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .utc-label {
+            font-weight: 600;
+            color: #888;
+        }
+        .no-timestamp {
+            color: #666;
+            font-style: italic;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 30px 0;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        input[type="datetime-local"]:focus {
+            outline: none;
+            border-color: #007AFF;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .copy-btn {
+            background: #007AFF;
+            color: white;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .copy-btn.copied {
+            background: #28a745;
+        }
+        .timestamp-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #555;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unix Timestamp Converter</h1>
+        
+        <div id="display-section">
+            <div class="date-display" id="date-display"></div>
+            <div class="time-display" id="time-display"></div>
+            <div class="timezone-info" id="timezone-info"></div>
+            <div class="utc-display" id="utc-display"></div>
+        </div>
+
+        <hr>
+
+        <label for="datetime-picker">Pick a date and time:</label>
+        <input type="datetime-local" id="datetime-picker">
+        
+        <div class="button-row">
+            <button class="copy-btn" id="copy-btn">Copy Link to Clipboard</button>
+        </div>
+        
+        <div class="timestamp-info" id="timestamp-info"></div>
+    </div>
+
+    <script>
+        const dateDisplay = document.getElementById('date-display');
+        const timeDisplay = document.getElementById('time-display');
+        const timezoneInfo = document.getElementById('timezone-info');
+        const utcDisplay = document.getElementById('utc-display');
+        const datetimePicker = document.getElementById('datetime-picker');
+        const copyBtn = document.getElementById('copy-btn');
+        const timestampInfo = document.getElementById('timestamp-info');
+
+        function getTimestampFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const timestamp = params.get('t') || params.get('timestamp');
+            return timestamp ? parseInt(timestamp, 10) : null;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString(undefined, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(date) {
+            return date.toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function formatTimeUTC(date) {
+            return date.toLocaleString('en-US', {
+                timeZone: 'UTC',
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+        }
+
+        function getTimezoneString() {
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const offset = new Date().getTimezoneOffset();
+            const sign = offset <= 0 ? '+' : '-';
+            const hours = Math.floor(Math.abs(offset) / 60).toString().padStart(2, '0');
+            const mins = (Math.abs(offset) % 60).toString().padStart(2, '0');
+            return `${tz} (UTC${sign}${hours}:${mins})`;
+        }
+
+        function displayTimestamp(timestamp) {
+            if (timestamp === null || isNaN(timestamp)) {
+                dateDisplay.textContent = '';
+                timeDisplay.innerHTML = '<span class="no-timestamp">No timestamp in URL</span>';
+                timezoneInfo.textContent = 'Add ?t=UNIX_TIMESTAMP to the URL';
+                utcDisplay.textContent = '';
+                return;
+            }
+
+            const date = new Date(timestamp * 1000);
+            
+            if (isNaN(date.getTime())) {
+                timeDisplay.innerHTML = '<span class="no-timestamp">Invalid timestamp</span>';
+                utcDisplay.textContent = '';
+                return;
+            }
+
+            dateDisplay.textContent = formatDate(date);
+            timeDisplay.textContent = formatTime(date);
+            timezoneInfo.textContent = `Your timezone: ${getTimezoneString()}`;
+            utcDisplay.innerHTML = `<span class="utc-label">UTC:</span> ${formatTimeUTC(date)}`;
+        }
+
+        function toLocalDatetimeString(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        function updateURL(timestamp) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('t', timestamp);
+            window.history.replaceState({}, '', url);
+            updateTimestampInfo(timestamp);
+        }
+
+        function updateTimestampInfo(timestamp) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('t', timestamp);
+            timestampInfo.textContent = `Unix timestamp: ${timestamp}\n${url.href}`;
+        }
+
+        function initializePicker() {
+            const timestamp = getTimestampFromURL();
+            const date = timestamp ? new Date(timestamp * 1000) : new Date();
+            datetimePicker.value = toLocalDatetimeString(date);
+            
+            if (timestamp) {
+                updateTimestampInfo(timestamp);
+            } else {
+                const nowTimestamp = Math.floor(Date.now() / 1000);
+                updateTimestampInfo(nowTimestamp);
+            }
+        }
+
+        datetimePicker.addEventListener('change', () => {
+            const date = new Date(datetimePicker.value);
+            const timestamp = Math.floor(date.getTime() / 1000);
+            updateURL(timestamp);
+            displayTimestamp(timestamp);
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            const date = new Date(datetimePicker.value);
+            const timestamp = Math.floor(date.getTime() / 1000);
+            const url = new URL(window.location.href);
+            url.searchParams.set('t', timestamp);
+            
+            try {
+                await navigator.clipboard.writeText(url.href);
+                copyBtn.textContent = 'Copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy Link to Clipboard';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                copyBtn.textContent = 'Failed to copy';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy Link to Clipboard';
+                }, 2000);
+            }
+        });
+
+        // Initialize
+        displayTimestamp(getTimestampFromURL());
+        initializePicker();
+    </script>
+</body>
+</html>
